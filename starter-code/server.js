@@ -35,7 +35,7 @@ app.use(express.static('./public'));
 // REVIEW: Routes for requesting HTML resources
 app.get('/new', function(request, response) {
   // COMMENT:(done) What number(s) of the full-stack-diagram.png image correspond to the following line of code?  Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-        //Answer: app.get goes through numbers 2 and 5.  Article.fetchAll(); is interacting.  The CRUD is Read.
+        //Answer: app.get goes through numbers 5.  Article.fetchAll(); is interacting.  The CRUD is Read.
   response.sendFile('new.html', {root: './public'});
 });
 
@@ -55,7 +55,7 @@ app.get('/articles', function(request, response) {
 
 app.post('/articles', function(request, response) {
   // COMMENT:(done) What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Answer: It's 1, 2, 3, 4, and 5 of the diagram.  Article.prototype.insertRecord is interacting.  Its Create in CRUD.
+  // Answer: It's 2, 3, 4, and 5 of the diagram.  Article.prototype.insertRecord is interacting.  Its Create in CRUD.
   client.query(
     `INSERT INTO
     articles(title, author, "authorUrl", category, "publishedOn", body)
@@ -107,7 +107,7 @@ app.put('/articles/:id', function(request, response) {
 
 app.delete('/articles/:id', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Answer: 2, 3, 4, and 5.  Article.prototype.deleteRecord is interacting.  The CRUD is Destroy.
+  // Answer: 2, 3, 4, and 5.  Article.prototype.deleteRecord is interacting.  The CRUD is Delete.
   client.query(
     `DELETE FROM articles WHERE article_id=$1;`,
     [request.params.id]
@@ -122,7 +122,7 @@ app.delete('/articles/:id', function(request, response) {
 
 app.delete('/articles', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Answer: 2, 3, 4, and 5.  Article.truncateTable is interacting.  The CRUD is Destroy.
+  // Answer: , 3, 4, and .  Article.truncateTable is interacting.  The CRUD is Delete.
   client.query(
     'DELETE FROM articles;'
   )
@@ -147,7 +147,7 @@ app.listen(PORT, function() {
 ////////////////////////////////////////
 function loadArticles() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Answer:1, 2 and 5 of the diagram.  Article.prototype.insertRecord is interacting.  The CRUD is Read and then Create.
+  // Answer:1, 2, 3, 4, 5 of the diagram.  Article.prototype.insertRecord is interacting.  The CRUD is Read.
   client.query('SELECT COUNT(*) FROM articles')
   .then(result => {
     // REVIEW: result.rows is an array of objects that Postgres returns as a response to a query.
@@ -173,7 +173,7 @@ function loadArticles() {
 
 function loadDB() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Answer: All numbers of the diagram.  function Article (rawDataObj) is interacting.  The CRUD is Create.
+  // Answer: numbers - 2,3,4,5  function Article (rawDataObj) is interacting.  The CRUD is Create.
   client.query(`
     CREATE TABLE IF NOT EXISTS articles (
       article_id SERIAL PRIMARY KEY,
